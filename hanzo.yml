@@ -1,0 +1,13 @@
+# Canonical CI/CD config for hanzoai/vitest — read by hanzoai/ci (via
+# .hanzo/workflows/cicd.yml) and by platform.hanzo.ai.
+#
+# Library monorepo (pnpm). `pnpm build` is the repo's own build of every
+# published package (rolldown bundle + declaration emit), which is what breaks
+# when packages/ breaks.
+#
+# Install is filtered to packages/** — the test/ and examples/ workspaces are
+# fixture projects that pull whole framework toolchains (browser drivers,
+# playwright, framework adapters) and gate nothing at build time.
+test:
+  - name: build
+    run: pnpm install --frozen-lockfile --filter './packages/**' && pnpm build
